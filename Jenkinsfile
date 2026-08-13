@@ -41,8 +41,6 @@ pipeline {
             allure includeProperties: false,
                    jdk: '',
                    results: [[path: 'allure-results']]
-
-            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
         }
     }
 }
