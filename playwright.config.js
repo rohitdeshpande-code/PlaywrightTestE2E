@@ -16,8 +16,7 @@ import { worker } from 'node:cluster';
 const config = ({
   testDir: './tests',
   timeout: 30*1000,
-  fullyParallel: true,
-  workers: 6,
+  workers: 3,
   //retries: 2,
   expect: {
     timeout: 5*1000
