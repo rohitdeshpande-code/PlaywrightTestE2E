@@ -38,8 +38,11 @@ pipeline {
 
     post {
         always {
-            bat 'npm run report:allure:generate'
-            archiveArtifacts artifacts: 'allure-report/**, playwright-report/**', allowEmptyArchive: true
+            allure includeProperties: false,
+                   jdk: '',
+                   results: [[path: 'allure-results']]
+
+            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
         }
     }
 }
