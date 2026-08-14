@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "install:browsers": "playwright install",
+    "test:eventbooking": "playwright test \"tests/EventBooking/\" --project=chrome --reporter=line,allure-playwright",
+    "report:allure:generate": "allure generate ./allure-results --clean -o allure-report",
+    "report:allure:open": "allure open ./allure-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

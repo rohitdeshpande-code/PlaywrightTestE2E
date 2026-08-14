@@ -16,7 +16,7 @@ import { worker } from 'node:cluster';
 const config = ({
   testDir: './tests',
   timeout: 30*1000,
-  worker: 5,
+  workers: 1,
   //retries: 2,
   expect: {
     timeout: 5*1000
@@ -29,7 +29,7 @@ const config = ({
         actionTimeout: 10*1000,
         navigationTimeout: 10*1000,
         browserName: 'chromium',
-        headless: false,
+        headless: !!process.env.CI,
         screenshot: 'on',
         video: 'retain-on-failure',
         trace: 'retain-on-failure'
