@@ -27,8 +27,8 @@ test('Event Booking End to End flow using Page Object Model', async ({page}) => 
         testData.BOOK_TICKETS_PAGE_TEXT.TICKETS_RESERVED)
     await eventBookingAndConfirmPage.getConfirmBookingUrl(testData.BOOKING_URL_TEXT.BOOKING_URL_LABEL)
 
-    const myBookingPage = poManager.getMyBookingPage()
-    await myBookingPage.getMyBookingDetails(testData.MY_BOOKING_PAGE_TEXT.HEADER_TEXT, data.eventName)
+    const bookingMyPage = poManager.getBookingMyPage()
+    await bookingMyPage.getMyBookingDetails(testData.MY_BOOKING_PAGE_TEXT.HEADER_TEXT, data.eventName)
 
     const viewDetailsAndCancelPage = poManager.getViewDetailsAndCancelPage()
     await viewDetailsAndCancelPage.verifyViewDetailsPage(data.eventName, fullname, 
