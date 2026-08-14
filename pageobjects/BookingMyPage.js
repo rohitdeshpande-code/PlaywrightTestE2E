@@ -1,6 +1,6 @@
 const {expect} = require('@playwright/test')
 
-class MyBookingPage {
+class BookingMyPage {
 
     constructor(page) {
         this.page = page
@@ -16,4 +16,4 @@ class MyBookingPage {
     }
 }
 
-module.exports = {MyBookingPage}
+module.exports = {BookingMyPage}

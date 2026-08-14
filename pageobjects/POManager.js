@@ -3,7 +3,7 @@ const {test, expect} = require('@playwright/test')
 const {LoginPage} = require ('./LoginPage')
 const {HomePage} = require('./HomePage')
 const {EventBookingAndConfirmPage} = require('./EventBookingAndConfirmPage')
-const {MyBookingPage} = require('./MyBookingPage')
+const {BookingMyPage} = require('./BookingMyPage')
 const {ViewDetailsAndCancelPage} = require('./ViewDetailsAndCancelPage')
 const {EventsPage} = require('./EventsPage')
 
@@ -14,7 +14,7 @@ class POManager {
         this.loginPage = new LoginPage(this.page)
         this.homePage = new HomePage(this.page)
         this.eventBookingAndConfirmPage = new EventBookingAndConfirmPage(this.page)
-        this.myBookingPage = new MyBookingPage(this.page)
+        this.bookingMyPage = new BookingMyPage(this.page)
         this.viewDetailsAndCancelPage = new ViewDetailsAndCancelPage(this.page)
         this.eventsPage = new EventsPage(this.page)
     }
@@ -31,8 +31,8 @@ class POManager {
         return this.eventBookingAndConfirmPage
     }
 
-    getMyBookingPage() {
-        return this.myBookingPage
+    getBookingMyPage() {
+        return this.bookingMyPage
     }
 
     getViewDetailsAndCancelPage() {
