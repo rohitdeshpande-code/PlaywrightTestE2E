@@ -45,6 +45,12 @@ pipeline {
                 bat 'npm run test:eventbooking'
             }
         }
+
+        stage('Run EventBooking Tests (TS)') {
+            steps {
+                bat 'npm run test:eventbooking:ts'
+            }
+        }
     }
 
     post {

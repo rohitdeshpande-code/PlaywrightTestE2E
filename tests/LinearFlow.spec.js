@@ -87,6 +87,30 @@ test('My First Line Test case for EventHub booking application', async ({browser
     await expect(page.getByPlaceholder('Search events, venues…')).toHaveValue('')
 
 
-   await page.pause()
+    /*
+        New Code
+    */
+    //Home page
+    await page.locator("[data-testid='nav-home']").click()
+    await page.getByRole("button", {name: "Explore All Events"}).click()
+
+    //Event Page
+    await expect(page).toHaveURL(/\/events/);
+    await page.locator("text='Add New Event'").click()
+    await page.locator(".text-lg").filter({hasText: '+ New Event'})
+
+    await page.getByLabel("Title").fill("Test Event")
+    await page.getByPlaceholder("Describe the event…").fill("This is a test event for automation testing.")
+    const dropDown = page.getByLabel("Category")
+    dropDown.selectOption({label: "Sports"})
+    await page.getByLabel("City").fill("Pune")
+    await page.getByLabel("Venue").fill("Street Road, Pune-12")
+    await page.getByLabel("Event Date & Time").fill("2026-08-20T10:00")
+    await page.getByLabel("Price ($)").fill("100")
+    await page.getByLabel("Total Seats").fill("10")
+    await page.getByRole("button", {name: "+ Add Event"}).click()
+    await expect(page.locator("p.leading-snug")).toHaveText("Event created!")
+
+    await page.pause()
 
 })
