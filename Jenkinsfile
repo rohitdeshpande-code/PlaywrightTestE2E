@@ -17,6 +17,17 @@ pipeline {
             }
         }
 
+        stage('Clean Previous Results') {
+            steps {
+                bat '''
+                    if exist allure-results rmdir /s /q allure-results
+                    if exist allure-report rmdir /s /q allure-report
+                    if exist test-results rmdir /s /q test-results
+                    if exist playwright-report rmdir /s /q playwright-report
+                '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 bat 'npm ci'

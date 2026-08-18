@@ -26,8 +26,8 @@ const config = ({
     {
       name: 'chrome',
       use: {
-        actionTimeout: 10*1000,
-        navigationTimeout: 10*1000,
+        // actionTimeout: 10*1000,
+        // navigationTimeout: 10*1000,
         browserName: 'chromium',
         headless: !!process.env.CI,
         screenshot: 'on',
@@ -40,8 +40,8 @@ const config = ({
       use: {
         browserName: 'webkit',
         headless: true,
-        actionTimeout: 10*1000,
-        navigationTimeout: 10*1000,
+        // actionTimeout: 10*1000,
+        // navigationTimeout: 10*1000,
         screenshot: 'on',
         video: 'retain-on-failure',
         trace: 'retain-on-failure'
