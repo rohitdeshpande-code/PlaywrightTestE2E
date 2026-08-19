@@ -38,8 +38,7 @@ test('Event Booking End to End flow using Page Object Model', async ({page}) => 
 
     const eventsPage = poManager.getEventsPage()
     await eventsPage.clickEventNavTab()
-    await eventsPage.searchEvent(data.eventName)
-    await eventsPage.clearSearchEvent()
+    await eventsPage.searchAndClearEvent(data.eventName)
 
 
     await page.pause()
