@@ -42,7 +42,17 @@ pipeline {
 
         stage('Run EventBooking Tests') {
             steps {
-                bat 'npm run test:eventbooking'
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    bat 'npm run test:eventbooking'
+                }
+            }
+        }
+
+        stage('Run EventBooking Tests (TS)') {
+            steps {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    bat 'npm run test:eventbooking:ts'
+                }
             }
         }
     }
