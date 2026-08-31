@@ -1,6 +1,16 @@
 
 const {test, expect} = require('@playwright/test')
 
+async function searchAndClearEvent(page, cardSections, searchText) {
+    const searchBox = page.getByPlaceholder('Search events, venues…')
+    await searchBox.fill(searchText)
+    await expect(cardSections).toHaveCount(1)
+    const eventText = await cardSections.locator('a[href*="events"] h3').textContent()
+    expect(eventText).toContain(searchText)
+    await page.getByRole("button", {name: 'Clear filters'}).click()
+    await expect(searchBox).toHaveValue('')
+}
+
 test('My First Line Test case for EventHub booking application', async ({browser}) => {
 
     const context = await browser.newContext()
@@ -78,17 +88,11 @@ test('My First Line Test case for EventHub booking application', async ({browser
     //Events page 
     await page.locator("a#nav-events").click()
     
-    await page.getByPlaceholder('Search events, venues…').fill('World Tech Summit')
-    await expect(cardSections).toHaveCount(1)
-    const searchedText = await page.getByPlaceholder('Search events, venues…').inputValue()
-    const eventText = await cardSections.locator('a[href*="events"] h3').textContent()
-    expect(eventText).toContain(searchedText)
-    await page.getByRole("button", {name: 'Clear filters'}).click()
-    await expect(page.getByPlaceholder('Search events, venues…')).toHaveValue('')
+    await searchAndClearEvent(page, cardSections, 'World Tech Summit')
 
 
     /*
-        New Code
+        ============================== New Code ============================
     */
     //Home page
     await page.locator("[data-testid='nav-home']").click()
@@ -97,7 +101,9 @@ test('My First Line Test case for EventHub booking application', async ({browser
     //Event Page
     await expect(page).toHaveURL(/\/events/);
     await page.locator("text='Add New Event'").click()
-    await page.locator(".text-lg").filter({hasText: '+ New Event'})
+
+    //Admin Events Page
+    await page.locator(".text-lg").filter({hasText: '+ New Event'}).waitFor()
 
     await page.getByLabel("Title").fill("Test Event")
     await page.getByPlaceholder("Describe the event…").fill("This is a test event for automation testing.")
@@ -109,8 +115,29 @@ test('My First Line Test case for EventHub booking application', async ({browser
     await page.getByLabel("Price ($)").fill("100")
     await page.getByLabel("Total Seats").fill("10")
     await page.getByRole("button", {name: "+ Add Event"}).click()
-    await expect(page.locator("p.leading-snug")).toHaveText("Event created!")
+    await expect(page.locator("p.leading-snug").nth(1)).toHaveText("Event created!")
 
-    await page.pause()
+    const eventRow = await page.locator('tr[data-testid="event-table-row"]').filter({hasText: "Test Event"})
+    await expect(eventRow.getByText('Test Event')).toBeVisible()
+    await expect(eventRow.getByRole("button", {name: "Edit"})).toBeVisible()
+    await expect(eventRow.getByRole("button", {name: "Delete"})).toBeVisible()
+
+
+    //Event Page
+    await page.locator("a#nav-events").click()
+
+    await searchAndClearEvent(page, cardSections, 'Test Event')
+    await page.locator("text='Add New Event'").click()
+
+    //Admin Events Page
+    await eventRow.getByRole("button", {name: "Delete"}).click()
+    await expect(page.locator("h2#modal-title")).toHaveText("Delete this event?")
+    await page.locator('button[data-testid="confirm-dialog-yes"]').click()
+    await expect(page.locator("p.leading-snug").nth(2)).toHaveText("Event deleted")
+
+
+
+
+    
 
 })

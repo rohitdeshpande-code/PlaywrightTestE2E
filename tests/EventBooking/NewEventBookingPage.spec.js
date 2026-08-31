@@ -1,4 +1,3 @@
-
 const {test} = require('@playwright/test')
 const {POManager} = require('../../pageobjects/POManager')
 const {testData} = require('../../utils/testData')
@@ -13,7 +12,7 @@ test.beforeEach(async ({page}) => {
     await loginPage.loginToPage(data.username, data.password)
 })
 
-test('View Details And Cancel Page - should show booking details and allow cancellation', async () => {
+test('New Event Booking and Cancel Page', async ({page}) => {
 
     const fullname = testData.randomFullName()
     const email = testData.randomEmailAddress()
@@ -38,5 +37,27 @@ test('View Details And Cancel Page - should show booking details and allow cance
     await viewDetailsAndCancelPage.verifyCancelBooking(testData.VIEW_DETAILS_PAGE_CANCEL_TEXT.HEADER_TEXT,
         testData.VIEW_DETAILS_PAGE_CANCEL_TEXT.CANCEL_CONFIRM_TEXT)
 
+    await homePage.clickOnHomeNav()
+    await homePage.clickOnExploreAllEvents()
+
+    const eventPage = poManager.getEventsPage()
+    await eventPage.verifyEventsPageUrl()
+    await eventPage.clickAddNewEvent()
+
+    const addEventsPage = poManager.getAddEventsPage()
+    const newEventData = testData.getNewEventCreatePage()
+    await addEventsPage.fillEventDetails(newEventData.EVENT_TITLE, newEventData.EVENT_DESCRIPTION,
+        newEventData.EVENT_CATEGORY, newEventData.EVENT_CITY, newEventData.EVENT_VENUE,
+        newEventData.EVENT_DATE_TIME, newEventData.EVENT_PRICE,
+        newEventData.EVENT_SEATS, testData.NEW_EVENT_PAGE_TEXT.NEW_EVENT_SUCCESS)
+
+    await addEventsPage.verifyNewEventCreated(newEventData.EVENT_TITLE)
+
+    await eventPage.clickEventNavTab()
+    await eventPage.searchAndClearEvent(newEventData.EVENT_TITLE)
+    await eventPage.clickAddNewEvent()
+
+    await addEventsPage.deleteNewEventCreated(testData.NEW_EVENT_PAGE_TEXT.NEW_EVENT_DELETE_TITLE, 
+        testData.NEW_EVENT_PAGE_TEXT.NEW_EVENT_DELETE)
 
 })

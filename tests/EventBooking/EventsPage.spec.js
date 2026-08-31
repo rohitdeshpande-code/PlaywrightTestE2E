@@ -16,7 +16,8 @@ test('Events Page - should search for an event and clear the filter', async () =
 
     const eventsPage = poManager.getEventsPage()
     await eventsPage.clickEventNavTab()
-    await eventsPage.searchEvent(data.eventName)
-    await eventsPage.clearSearchEvent()
+    // await eventsPage.searchEvent(data.eventName)
+    // await eventsPage.clearSearchEvent()
+    await eventsPage.searchAndClearEvent(data.eventName)
 
 })

@@ -6,6 +6,7 @@ const {EventBookingAndConfirmPage} = require('./EventBookingAndConfirmPage')
 const {BookingMyPage} = require('./BookingMyPage')
 const {ViewDetailsAndCancelPage} = require('./ViewDetailsAndCancelPage')
 const {EventsPage} = require('./EventsPage')
+const {AddEventsPage} = require('./AddEventsPage')
 
 class POManager {
 
@@ -17,6 +18,7 @@ class POManager {
         this.bookingMyPage = new BookingMyPage(this.page)
         this.viewDetailsAndCancelPage = new ViewDetailsAndCancelPage(this.page)
         this.eventsPage = new EventsPage(this.page)
+        this.addEventsPage = new AddEventsPage(this.page)
     }
 
     getLoginPage() {
@@ -41,6 +43,10 @@ class POManager {
 
     getEventsPage() {
         return this.eventsPage
+    }
+
+    getAddEventsPage() {
+        return this.addEventsPage
     }
 
 }

@@ -5,6 +5,8 @@ class HomePage {
     constructor(page) {
         this.page = page
         this.cardSections = page.locator('[data-testid="event-card"]')
+        this.homeNav = page.locator("[data-testid='nav-home']")
+        this.exploreAllEventsBtn = page.getByRole("button", {name: "Explore All Events"})
 
     }
 
@@ -17,6 +19,14 @@ class HomePage {
                 break
             }
         }
+    }
+
+    async clickOnHomeNav() {
+        await this.homeNav.click()
+    }
+
+    async clickOnExploreAllEvents() {
+        await this.exploreAllEventsBtn.click()
     }
 
     async getEventPageUrl(eventText) {
